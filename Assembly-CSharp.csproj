@@ -57,6 +57,7 @@
      <Compile Include="Assets\MainMenuScript.cs" />
      <Compile Include="Assets\Scripts\Camera_Look.cs" />
      <Compile Include="Assets\Scripts\Camera_Move.cs" />
+     <Compile Include="Assets\Scripts\DoorRedScript.cs" />
      <Compile Include="Assets\Scripts\DoorScript.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
