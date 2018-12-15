@@ -37,10 +37,7 @@ public class MainMenuScript : MonoBehaviour {
     {
         door = 0;
         door = int.Parse(inputDoor.text);
-        //DoorRedScript stageManager = GetComponent<DoorRedScript>();
-       // ftext.text = door.ToString();
-
-        // bool isInList = intList.IndexOf(intVariable) != -1;
+        
         Debug.Log("bool: " + ifCorrect.ToString());
         ifCorrect = (intList.IndexOf(door) != -1);
         switch (door)
