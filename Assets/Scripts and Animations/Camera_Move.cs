@@ -21,6 +21,7 @@ public class Camera_Move: MonoBehaviour
 
     private void Update()
     {
+        
         PlayerMovement();
     }
 
@@ -38,11 +39,11 @@ public class Camera_Move: MonoBehaviour
 
     public void ExitInput()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneManager.LoadScene(0);
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
+       // if (Input.GetKeyDown(KeyCode.Escape))
+       // {
+       //     SceneManager.LoadScene(0);
+       //     Cursor.visible = true;
+       //     Cursor.lockState = CursorLockMode.None;
+       // }
     }
 }

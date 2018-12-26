@@ -53,12 +53,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Camera_Look.cs" />
-     <Compile Include="Assets\Scripts\Camera_Move.cs" />
-     <Compile Include="Assets\Scripts\camerLook.cs" />
-     <Compile Include="Assets\Scripts\DoorRedScript.cs" />
-     <Compile Include="Assets\Scripts\DoorScript.cs" />
-     <Compile Include="Assets\Scripts\MainMenuScript.cs" />
+     <Compile Include="Assets\Scripts and Animations\AMovement.cs" />
+     <Compile Include="Assets\Scripts and Animations\Camera_Look.cs" />
+     <Compile Include="Assets\Scripts and Animations\Camera_Move.cs" />
+     <Compile Include="Assets\Scripts and Animations\CameraFollow.cs" />
+     <Compile Include="Assets\Scripts and Animations\DoorRedScript.cs" />
+     <Compile Include="Assets\Scripts and Animations\DoorScript.cs" />
+     <Compile Include="Assets\Scripts and Animations\GridScript.cs" />
+     <Compile Include="Assets\Scripts and Animations\MainMenuScript.cs" />
+     <Compile Include="Assets\Scripts and Animations\Node.cs" />
+     <Compile Include="Assets\Scripts and Animations\PathFinding.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
