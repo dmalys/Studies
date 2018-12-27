@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts and Animations\CameraFollow.cs" />
      <Compile Include="Assets\Scripts and Animations\DoorRedScript.cs" />
      <Compile Include="Assets\Scripts and Animations\DoorScript.cs" />
+     <Compile Include="Assets\Scripts and Animations\DoorTargetScript.cs" />
      <Compile Include="Assets\Scripts and Animations\GridScript.cs" />
      <Compile Include="Assets\Scripts and Animations\MainMenuScript.cs" />
      <Compile Include="Assets\Scripts and Animations\Node.cs" />
