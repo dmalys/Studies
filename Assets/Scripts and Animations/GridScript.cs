@@ -90,5 +90,7 @@ public class GridScript : MonoBehaviour
                 Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .1f));
             }
         }
+
+       
     }
 }

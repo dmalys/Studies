@@ -5,19 +5,21 @@ using UnityEngine;
 public class AMovement : MonoBehaviour
 {
     private GridScript grid;
-    private Vector3 cachedSeekerPos;
-    private Vector3 cachedTargetPos;
-    public Transform seeker;//, target;
-    public Transform target;
+    public Transform seeker;
+    private Transform target;
+    private bool donePart2 = false;
     private bool stair = false;
-    private bool move = false, canStart = true;
+    private int numberOfWaypoints;
+    private bool leftStair;
     private List<int> leftRooms = new List<int> {211,212,213,214,209,208,207,110,111,108,107,106,105,104,311,312,313,314,309,308,307,306};
     private List<GameObject> rightWaypoints = new List<GameObject>();
     private List<GameObject> leftWaypoints = new List<GameObject>();
+    private GameObject doorToChange2;
+
     void GoStairs()
     {
-        int numberOfWaypoints=0;
-        bool leftStair = false;
+        numberOfWaypoints=0;
+        leftStair = false;
         if (MainMenuScript.door > 100 && MainMenuScript.door<200)
         {
             if (leftRooms.Contains(MainMenuScript.door))
@@ -56,28 +58,10 @@ public class AMovement : MonoBehaviour
                 numberOfWaypoints = 11;
             }
         }
-        //
-        if (leftStair)
-        {
-            for (int i = 0; i < numberOfWaypoints; i++)
-            {
-                seeker.position = Vector3.Lerp(seeker.position, leftWaypoints[i].transform.position, 1);
-            }
-        }
-        else
-        {
-            for (int i = 0; i < numberOfWaypoints; i++)
-            {
-                seeker.position = Vector3.Lerp(seeker.position, rightWaypoints[i].transform.position, 1);
-            }
-        }
-
     }
 
     void TargetSet()
     {
-        GameObject doorToChange2;//= GameObject.Find("door " + MainMenuScript.door);
-        //GameObject doorToChange2 = GameObject.Find("door 20");
        
         if (MainMenuScript.door < 100)
         {
@@ -89,17 +73,17 @@ public class AMovement : MonoBehaviour
             stair = true;
             if (leftRooms.Contains(MainMenuScript.door))
             {
+                Debug.Log("left stair");
                 doorToChange2 = GameObject.Find("Waypoint PL");
                 target = doorToChange2.GetComponentInChildren<BoxCollider>().transform;
             }
             else
             {
+                Debug.Log("right stair");
                 doorToChange2 = GameObject.Find("Waypoint PR");
                 target = doorToChange2.GetComponentInChildren<BoxCollider>().transform;
             }
         }
-
-        
     }
 
     void FindPath(Vector3 startPos, Vector3 targetPos)
@@ -180,71 +164,128 @@ public class AMovement : MonoBehaviour
         
         grid = GetComponent<GridScript>();
         TargetSet();
-        //someStringList.AddRange(new string[] { "seven", "eight", "nine" });
         rightWaypoints.AddRange(new GameObject[] { GameObject.Find("Waypoint PR1"), GameObject.Find("Waypoint PR2"), GameObject.Find("Waypoint 1R"), GameObject.Find("Waypoint PR4"), GameObject.Find("Waypoint PR5"), GameObject.Find("Waypoint PR6"), GameObject.Find("Waypoint 2R"), GameObject.Find("Waypoint PR8"), GameObject.Find("Waypoint PR9"), GameObject.Find("Waypoint PR10"), GameObject.Find("Waypoint 3R") });
         leftWaypoints.AddRange(new GameObject[] { GameObject.Find("Waypoint PL1"), GameObject.Find("Waypoint PL2"), GameObject.Find("Waypoint PL3"), GameObject.Find("Waypoint 1L"), GameObject.Find("Waypoint PL5"), GameObject.Find("Waypoint PL6"), GameObject.Find("Waypoint PL7"), GameObject.Find("Waypoint 2L"), GameObject.Find("Waypoint PL9"), GameObject.Find("Waypoint PL10"), GameObject.Find("Waypoint PL11"), GameObject.Find("Waypoint 3L") });
 
     }
 
     void Start() {
-       
-        // TargetSet(doorToChange.GetComponent<Transform>(),"doorTarget");
-
-        cachedSeekerPos = seeker.position;
-        cachedTargetPos = target.position;
-        FindPath(seeker.position, target.position); }
+        FindPath(seeker.position, target.position);
+        
+        AnimatePath();
+        
+    }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            move = true;
-            Debug.Log("move tru");
-                };
-        if (!move && canStart) {
-            if (cachedSeekerPos != seeker.position) {
-                cachedSeekerPos = seeker.position;
-                FindPath(seeker.position, target.position); }
-            if (cachedTargetPos != target.position) {
-                cachedTargetPos = target.position;
-                FindPath(seeker.position, target.position); 
-            }
+
+        
+        if (donePart2) //if (donePart1 &&donePart2)
+        {
+           // Debug.Log("sSSSSSSSSSSSSSSSSSSSSSSSSSStair canstart");
+            //nie dziala
+            // GoStairs();
+
+
+            // seeker.LookAt(doorToChange2.GetComponentInChildren<SphereCollider>().center);
+
         }
-        else {
-            AnimatePath();
-        }
+       // Debug.Log("donepart2:" + donePart2);
+
     }
     void AnimatePath()
     {
-        move = false;
-        canStart = false;
         Vector3 currentPos = seeker.position;
+        
         if (grid.path != null)
-        { //Debug.Log("ANIMATING PATH"); 
-            StartCoroutine(UpdatePosition(currentPos, grid.path[0], 0));
-        }
-        if (stair)
-        {
+        { //Debug.Log("ANIMATING PATH");
+         
+        StartCoroutine(UpdatePosition(currentPos, grid.path[0], 0, (coroutineBool) => {
+            donePart2 = coroutineBool;
+             currentPos=seeker.position;
+            if (coroutineBool) {
+                GoStairs();
+                donePart2 = true;
+                Debug.Log("startcour:" + donePart2);
+                if (stair)
+                {
+                    if (leftStair)
+                    {
+                        Debug.Log("started left stair coroutin");
+                        StartCoroutine(UpdatePositionStair(currentPos, leftWaypoints[0], 0));
 
-            //nie dziala
-            GoStairs();
+                    }
+                    else
+                    {
+                        Debug.Log("started right stair coroutin");
+                        StartCoroutine(UpdatePositionStair(currentPos, rightWaypoints[0], 0));
+                    }
+                }
+            }
+        }));
         }
-
+       
     }
-    IEnumerator UpdatePosition(Vector3 currentPos, Node n, int index)  {
+    IEnumerator UpdatePosition(Vector3 currentPos, Node n, int index, System.Action<bool> callback=null)  {
         //Debug.Log ("Started Coroutine...");
+       // Debug.Log("callback false");
+        callback(false);
         float t = 0.0f;
-        // camera.transform.position=n.worldPosition;
         Vector3 correctedPathPos = new Vector3 (n.worldPosition.x, 0.8f, n.worldPosition.z);
-        while (t < 1.0f) { t += Time.deltaTime*8;
+        while (t < 1.0f) {
+            t += Time.deltaTime*8;
             seeker.position = Vector3.Lerp(currentPos, correctedPathPos, t);
-            //seeker.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(correctedPathPos), 0.15F);
             yield return null;
         }
+        
         //Debug.Log ("Finished updating..."); 
         seeker.position = correctedPathPos;
         currentPos = correctedPathPos;
         index++;
-        if (index < grid.path.Count) StartCoroutine(UpdatePosition(currentPos, grid.path[index], index));
-        else canStart = true;
+        if (index == grid.path.Count)
+        {
+           
+            Debug.Log("callback true");
+            callback(true);
+        }
+        if (index < grid.path.Count)
+            StartCoroutine(UpdatePosition(currentPos, grid.path[index], index, callback));
+        //else
+        //{
+         //   if (index == 1) { 
+          //  Debug.Log("za cour");
+           // callback(true);
+        //}
+        //}
+    }
+
+    IEnumerator UpdatePositionStair(Vector3 currentPos, GameObject g, int index)
+    {
+        //Debug.Log ("Started Coroutine...");
+
+        float t = 0.0f;
+        Vector3 correctedPathPos = new Vector3(g.transform.position.x, g.transform.position.y, g.transform.position.z);
+       
+            while (t < 1.0f)
+            {
+                t += Time.deltaTime / 2;
+                seeker.position = Vector3.Lerp(currentPos, correctedPathPos, t);
+                yield return null;
+            }
+        
+       
+
+        //Debug.Log ("Finished updating..."); 
+        seeker.position = correctedPathPos;
+        currentPos = correctedPathPos;
+        index++;
+
+        if (index < numberOfWaypoints)
+        {
+            if(leftStair)
+                StartCoroutine(UpdatePositionStair(currentPos, leftWaypoints[index], index));
+            else
+                StartCoroutine(UpdatePositionStair(currentPos, rightWaypoints[index], index));
+        }
     }
 }
     
