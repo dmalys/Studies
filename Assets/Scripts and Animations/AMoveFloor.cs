@@ -104,7 +104,7 @@ public class AMoveFloor : MonoBehaviour
     {
         if (donePart2)
         {
-            // Debug.Log("done in another floor");
+            
             if (xyc == 0) {
                 
                 FindPath(seeker.position, target.position);
@@ -127,7 +127,7 @@ public class AMoveFloor : MonoBehaviour
         Vector3 currentPos = seeker.position;
 
         if (grid.path != null)
-        { //Debug.Log("ANIMATING PATH");
+        { 
 
             StartCoroutine(UpdatePosition(currentPos, grid.path[0], 0));
         }
@@ -138,7 +138,7 @@ public class AMoveFloor : MonoBehaviour
   
     IEnumerator UpdatePosition(Vector3 currentPos, Node n, int index)
     {
-        //Debug.Log ("Started Coroutine...");
+    
 
         float t = 0.0f;
         Vector3 correctedPathPos = new Vector3(n.worldPosition.x, n.worldPosition.y, n.worldPosition.z);
@@ -149,7 +149,6 @@ public class AMoveFloor : MonoBehaviour
             yield return null;
         }
 
-        //Debug.Log ("Finished updating..."); 
         seeker.position = correctedPathPos;
         currentPos = correctedPathPos;
         index++;

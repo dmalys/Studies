@@ -197,7 +197,7 @@ public class AMovement : MonoBehaviour
         {
 
             if (floorLevel != 0 && stair)
-            {//on floor enable script to go to door
+            {
 
                 if (leftStair)
                 {
@@ -214,7 +214,7 @@ public class AMovement : MonoBehaviour
                 GameObject.Find("A*").GetComponent<AMovement>().enabled = false;
 
             }
-            // seeker.LookAt(doorToChange2.GetComponentInChildren<SphereCollider>().center);
+           
 
         }
 
@@ -224,7 +224,7 @@ public class AMovement : MonoBehaviour
         Vector3 currentPos = seeker.position;
 
         if (grid.path != null)
-        { //Debug.Log("ANIMATING PATH");
+        {
 
             StartCoroutine(UpdatePosition(currentPos, grid.path[0], 0, (coroutineBool) =>
             {
@@ -267,7 +267,7 @@ public class AMovement : MonoBehaviour
     }
     IEnumerator UpdatePosition(Vector3 currentPos, Node n, int index, System.Action<bool> callback)
     {
-        //Debug.Log ("Started Coroutine...");
+      
 
         float t = 0.0f;
         Vector3 correctedPathPos = new Vector3(n.worldPosition.x, 0.8f, n.worldPosition.z);
@@ -278,7 +278,7 @@ public class AMovement : MonoBehaviour
             yield return null;
         }
 
-        //Debug.Log ("Finished updating..."); 
+   
         seeker.position = correctedPathPos;
         currentPos = correctedPathPos;
         index++;
@@ -294,7 +294,7 @@ public class AMovement : MonoBehaviour
 
     IEnumerator UpdatePositionStair(Vector3 currentPos, GameObject g, int index, System.Action<bool> callback)
     {
-        //Debug.Log ("Started Coroutine...");
+       
 
         float t = 0.0f;
         Vector3 correctedPathPos = new Vector3(g.transform.position.x, g.transform.position.y, g.transform.position.z);
@@ -306,7 +306,7 @@ public class AMovement : MonoBehaviour
             yield return null;
         }
         
-        //Debug.Log ("Finished updating..."); 
+       
         seeker.position = correctedPathPos;
         currentPos = correctedPathPos;
         index++;
@@ -316,14 +316,14 @@ public class AMovement : MonoBehaviour
             {
 
                 Debug.Log("left callback");
-                //yield return new WaitForSeconds(1);
+             
                 callback(true);
 
             }
             else
             {
                 Debug.Log("right callback");
-               // yield return new WaitForSeconds(1);
+             
                 callback(true);
 
             }
