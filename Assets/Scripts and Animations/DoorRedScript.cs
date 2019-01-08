@@ -15,7 +15,9 @@ public class DoorRedScript : MonoBehaviour {
             GameObject doorToChange = GameObject.Find("door " + MainMenuScript.door);
            // GameObject doorToChange = GameObject.Find("Component#8 9");
             doorToChange.GetComponentInChildren<Renderer>().material.color= Color.red;
-            doorToChange.GetComponentInChildren<SphereCollider>().enabled = true;
+            
+                doorToChange.GetComponentInChildren<SphereCollider>().enabled = true;
+            
         }
     }
 }

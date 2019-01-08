@@ -1,6 +1,6 @@
 Win64
 PlayerPath?
-C:/Users/Damian/Desktop/TourGuideV1/inzTest.exe
+C:/Users/Damian/Desktop/TGv1.1/inzTest.exe
 SceneListBegin?
 Assets/Scenes/Menu.unity
 Assets/Scenes/Game.unity

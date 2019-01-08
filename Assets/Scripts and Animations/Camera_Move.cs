@@ -5,12 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Camera_Move: MonoBehaviour
 {
-    [SerializeField]
-    private string horizontalInputName;
-    [SerializeField]
-    private string verticalInputName;
-    [SerializeField]
-    private float movementSpeed;
+    
 
     private CharacterController charController;
 
@@ -27,11 +22,12 @@ public class Camera_Move: MonoBehaviour
 
     private void PlayerMovement()
     {
-        float horizInput = Input.GetAxis(horizontalInputName) * movementSpeed;
-        float vertInput = Input.GetAxis(verticalInputName) * movementSpeed;
 
-        Vector3 forwardMovement = transform.forward * vertInput;
-        Vector3 rightMovement = transform.right * horizInput;
+        float verticalInput = Input.GetAxis("Vertical") * MainMenuScript.movementSpeed;
+        float horizonztalInput = Input.GetAxis("Horizontal") * MainMenuScript.movementSpeed;
+
+        Vector3 forwardMovement = transform.forward * verticalInput;
+        Vector3 rightMovement = transform.right * horizonztalInput;
 
         charController.SimpleMove(forwardMovement + rightMovement);
         ExitInput();
@@ -39,11 +35,11 @@ public class Camera_Move: MonoBehaviour
 
     public void ExitInput()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneManager.LoadScene(0);
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
+       // if (Input.GetKeyDown(KeyCode.Escape))
+      //  {
+      //      SceneManager.LoadScene(0);
+      //      Cursor.visible = true;
+      //      Cursor.lockState = CursorLockMode.None;
+      //  }
     }
 }

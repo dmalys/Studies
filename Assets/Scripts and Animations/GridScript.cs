@@ -85,7 +85,7 @@ public class GridScript : MonoBehaviour
                 Gizmos.color = (n.walkable) ? Color.white : Color.red;
                 if (path != null)
                     if (path.Contains(n)) 
-                        Gizmos.color = Color.blue;
+                        Gizmos.color = Color.green;
                      
                 Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .1f));
             }

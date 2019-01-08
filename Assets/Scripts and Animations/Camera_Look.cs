@@ -4,20 +4,16 @@ using UnityEngine;
 
 public class Camera_Look : MonoBehaviour
 {
-    [SerializeField]
-    private string mouseXInputName, mouseYInputName;
-    [SerializeField]
-    private float mouseSensitivity;
 
     [SerializeField]
     private Transform playerBody;
 
-    private float xAxisClamp;
+    private float blockVal;
 
     private void Awake()
     {
         LockCursor();
-        xAxisClamp = 0.0f;
+        blockVal = 0.0f;
     }
     private void LockCursor()
     {
@@ -31,29 +27,29 @@ public class Camera_Look : MonoBehaviour
 
     private void CameraRotation()
     {
-        float mouseX = Input.GetAxis(mouseXInputName) * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis(mouseYInputName) * mouseSensitivity * Time.deltaTime;
+        float mouseX = Input.GetAxis("Mouse X") * MainMenuScript.mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * MainMenuScript.mouseSensitivity * Time.deltaTime;
 
-        xAxisClamp += mouseY;
+        blockVal += mouseY;
 
-        if (xAxisClamp > 90.0f)
+        if (blockVal > 90.0f)
         {
-            xAxisClamp = 90.0f;
+            blockVal = 90.0f;
             mouseY = 0.0f;
-            ClampXAxisRotationToValue(270.0f);
+            ResetAxisToValue(270.0f);
         }
-        else if (xAxisClamp < -90.0f)
+        else if (blockVal < -90.0f)
         {
-            xAxisClamp = -90.0f;
+            blockVal = -90.0f;
             mouseY = 0.0f;
-            ClampXAxisRotationToValue(90.0f);
+            ResetAxisToValue(90.0f);
         }
 
         transform.Rotate(Vector3.left * mouseY);
         playerBody.Rotate(Vector3.up * mouseX);
     }
 
-    private void ClampXAxisRotationToValue(float value)
+    private void ResetAxisToValue(float value)
     {
         Vector3 eulerRotation = transform.eulerAngles;
         eulerRotation.x = value;
